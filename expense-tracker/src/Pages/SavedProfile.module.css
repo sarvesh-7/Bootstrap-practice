@@ -1,0 +1,62 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    border: 1px solid rgb(175, 84, 84);
+    /* width: 41%; */
+    align-items: center;
+    border-radius: 25px;
+    min-height: auto;
+    padding:0.5rem;
+    text-align:center;
+}
+
+.main_span{
+    font-weight: bold;
+}
+
+.main_name{
+    font-style: italic;
+}
+.main_div{
+    margin-bottom: 5%;
+    /* margin-left: -67%; */
+    margin-top: 5%;
+}
+
+.photo_div{
+    /* display: block; */
+    text-align: center;
+}
+
+.photo_div span{
+    font-weight: bold;
+    display: block;
+    /* margin-bottom: 4%; */
+    /* margin: 0%; */
+    /* left: 0; */
+    /* margin-left: -35%; */
+}
+.photo_div img{
+    /* display: block; */
+    margin-top: 2%;
+    border-radius: 50%;
+    /* border: 17px; */
+    margin-bottom: 6%;
+    /* display: block; */
+    width:30%;
+}
+
+.title{
+    margin-left: 2%;
+}
+
+.edit_button{
+    margin-bottom: 3%;
+    padding: 8px;
+    background-color: rgb(175, 84, 84);
+    border: 1px solid rgb(175, 84, 84);
+    border-radius: 13px;
+    width: 25%;
+
+}

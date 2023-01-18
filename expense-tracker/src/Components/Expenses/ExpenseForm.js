@@ -1,0 +1,157 @@
+import classes from './ExpenseForm.module.css';
+import {useRef, Fragment, useState} from 'react';
+// import Button from '../UI/Button';
+import ExpenseList from './ExpenseList';
+import axios from 'axios';
+import {useSelector,useDispatch} from 'react-redux';
+import {expenseAction} from '../../store/Expense';
+import LoadingSpinner from '../UI/LoadingSpinner';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+const ExpenseForm = ()=>{
+
+    //firebase database URL path
+    const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
+
+     //firebase database URL path for update
+     const updateUrl = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
+
+    const dispatch = useDispatch();
+    const expenseList = useSelector((state)=>state.expense.expenseList);
+
+    //get user's email address
+    const emailID = useSelector(state=>state.auth.email);
+
+    //get expense details entered by user
+    const amountRef = useRef();
+    const descRef = useRef();
+    const categoryRef = useRef();
+
+    //check if user is editing existing expense details
+    const[isEditing,setIsEditing] = useState();
+    const[status,setStatus] = useState();
+
+
+    const submitExpenseHandler=async(e)=>{
+        e.preventDefault();
+
+        if(expenseList.length===10)
+        {
+            alert('Maximum expenses limit reached');
+            return;
+        }
+        const amount = amountRef.current.value;
+        const description = descRef.current.value;
+        const category = categoryRef.current.value;
+
+        if(!amount||!description){
+            alert('All fields are mandatory');
+            return;
+        }
+
+        const expObj = {
+            amount, 
+            description,
+            category
+        };
+       
+        //update expense details into firebase database
+        setStatus('pending');
+        const res = await axios.post(`${url}/${emailID}.json`, expObj);
+        console.log('res', res);
+
+        if(res.status===200){
+            alert('Expense stored in database successfully');
+            setStatus('completed');
+           const expense = {
+               id : res.data.name,
+               ...expObj
+           };
+        dispatch(expenseAction.addExpense(expense));
+        }
+        else{
+            alert('Error while storing expense details ');
+            setStatus('completed');
+        }
+
+    }
+
+    const editExpense=(expense)=>{
+        //update expense details into form inputs using ref
+        amountRef.current.value = expense.amount;
+        descRef.current.value = expense.description;
+        categoryRef.current.value = expense.category;
+        setIsEditing(expense.id);
+    };
+
+    const editExpenseHandler=async(e)=>{
+        e.preventDefault();
+        //update expense details into backend and show it into frontend
+        const expObj = {
+            id : isEditing,
+            amount : amountRef.current.value,
+            description : descRef.current.value,
+            category : categoryRef.current.value
+        };
+        setStatus('pending');
+        const res = await axios.put(`${updateUrl}/${emailID}/${expObj.id}.json`, expObj);
+        if(res.status===200)
+        console.log('expense edited successfully');
+        setStatus('completed');
+        dispatch(expenseAction.addExpense(expObj));
+        setIsEditing(false);
+    }
+
+    return(
+        <Fragment>
+        {
+            status === 'pending' &&
+            <div className={classes.spinner}>
+            <LoadingSpinner/>
+            </div>
+        }
+        <Container>
+        <Row>
+        <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={10}>
+        <Card className="p-3">
+        <Form>
+            <Form.Control type="number" ref={amountRef} placeholder="Amount" className="mb-3"/>
+            <Form.Control type="number" ref={descRef} placeholder="Description" className="mb-3"/>
+            <Form.Select ref={categoryRef}>
+            <option value='Bills'>Bills</option>
+            <option value='Food'>Food</option>
+            <option value='Loan'>Loan</option>
+            <option value='healthcare'>healthcare</option>
+            <option value='healthcare'>Others</option>
+            </Form.Select>
+            {
+                !isEditing &&
+                <Button type='submit' variant = "danger" onClick={submitExpenseHandler} className="mt-2">
+                Add Expense
+                </Button> 
+            }
+            {
+                isEditing &&
+                <Button type='submit' variant="danger" onClick={editExpenseHandler} className="mt-2">
+                Edit Expense
+                </Button>
+            }   
+        </Form>
+        </Card>
+        </Col>
+        </Row>
+        <Row>
+        <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={10}>
+        <ExpenseList expenses = {expenseList} editExpense={editExpense}/>
+        </Col>
+        </Row>
+        </Container>
+        </Fragment>
+    )
+};
+export default ExpenseForm;

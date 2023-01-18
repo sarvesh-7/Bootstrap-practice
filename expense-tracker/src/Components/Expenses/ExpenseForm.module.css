@@ -1,0 +1,22 @@
+.expenseForm{
+    /* width:30%;
+    margin: 2rem auto 2rem;
+    border: 0.2rem solid rgb(196, 89, 89);
+    padding: 2rem;
+    font-weight: bold;
+    text-align: left; */
+    margin:auto;
+}
+
+/* .expenseButton{
+    border: 1px solid rgb(196, 89, 89);
+    background-color: rgb(196, 89, 89);
+    color : white;
+} */
+
+.spinner{
+    position: fixed;
+    top: 30%;
+    left:45%;
+    margin: auto;
+}

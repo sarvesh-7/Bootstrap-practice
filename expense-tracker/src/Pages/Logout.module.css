@@ -1,0 +1,12 @@
+.logout
+{
+        color:rgb(211, 104, 104);
+        border : 1px solid rgb(211, 104, 104);
+        background-color: transparent;     
+}
+
+.logout:hover
+{
+        background-color:rgb(211, 104, 104);
+        color:white;
+}
