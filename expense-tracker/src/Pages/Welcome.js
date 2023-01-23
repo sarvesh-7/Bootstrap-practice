@@ -1,7 +1,6 @@
 import classes from './Welcome.module.css';
 import {Link} from 'react-router-dom';
-import React,{Fragment} from 'react';
-// import Button from '../Components/UI/Button';
+import React,{Fragment,memo} from 'react';
 import Logout from './Logout';
 import ExpenseForm from '../Components/Expenses/ExpenseForm';
 import axios from 'axios';
@@ -20,8 +19,6 @@ const Welcome = (props) => {
     const profilePhoto = useSelector((state)=>state.auth.profilePhoto);
     const isPremiumAc = useSelector((state)=>state.premium.isPremiumAc);
     const expenses = useSelector((state)=>state.expense.expenseList);
-
-    console.log(expenses);
 
     const dispatch = useDispatch();
 
@@ -80,8 +77,8 @@ const Welcome = (props) => {
 
     return (
         <Fragment>
-            <Navbar collapseOnSelect bg="secondary" variant="dark" expand='md'>
-            <Container>
+            <Navbar collapseOnSelect bg="secondary" variant="dark" expand='lg'>
+            <Container fluid>
              <Navbar.Brand href="/">Welcome to Expense Tracker!!
              </Navbar.Brand>
              <Navbar.Text>
@@ -104,7 +101,7 @@ const Welcome = (props) => {
                  <Navbar.Collapse id="navLinks" className={classes['right-aligned']}>
                      <Nav>
                          <Nav.Link href="#">
-                         <Button variant="secondary" onClick={verifyEmailHandler} className={classes.verify}>Verify Email</Button>
+                         <Button variant="secondary" onClick={verifyEmailHandler} className={classes.navLinks}>Verify Email</Button>
                          </Nav.Link>
 
                          <Nav.Link href="#">
@@ -114,14 +111,14 @@ const Welcome = (props) => {
                              isPremiumAc && 
                              <>
                              <Nav.Link download = "expense.csv" href = {URL.createObjectURL(blob)} type='click'>
-                                <Button variant="secondary" type ='click'> 
+                                <Button variant="secondary" type ='click' className={classes.navLinks}> 
                                 <i class="fa fa-download"></i> {}
-                                Download expense report
+                                Expense report
                                 </Button>
                             </Nav.Link>
                         
                             <Nav.Link href="#">
-                                <Button variant="secondary" type='click' onClick={changeThemeHandler}>
+                                <Button variant="secondary" type='click' onClick={changeThemeHandler} className={classes.navLinks}>
                                 <i class="fa fa-toggle-on"></i>{}Change theme
                                 </Button>
                             </Nav.Link>
@@ -135,4 +132,4 @@ const Welcome = (props) => {
         </Fragment>
     )
 }
-export default Welcome;
+export default memo(Welcome);

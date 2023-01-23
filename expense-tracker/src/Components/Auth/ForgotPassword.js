@@ -2,6 +2,7 @@ import classes from '../UI/LoadingSpinner.module.css';
 import axios from 'axios';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import { useRef,useState } from 'react';
+import {useSelector} from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -16,6 +17,8 @@ const ForgotPassword = ()=>{
 
     //check if request is pending or completed
     const[status,setStatus] = useState('');
+
+    const theme = useSelector(state=>state.theme.theme);
     
 
     //reset password URL
@@ -62,7 +65,7 @@ const ForgotPassword = ()=>{
         <Container fluid>
     <Row>
     <Col lg={5} xs={11} className={`mt-5`} style={{margin:'auto'}}>
-    <Card border='danger' className={` p-3`}>
+    <Card border='danger' bg={theme==='dark'&& 'dark'} className={` p-3`}>
         <Form>
         <Form.Label forhtml='email'>Enter the email with which you have registered</Form.Label>
         <Form.Control type='email' id='email' placeholder='email' ref={emailRef}/>

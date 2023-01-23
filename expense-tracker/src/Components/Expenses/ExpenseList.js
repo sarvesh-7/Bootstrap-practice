@@ -3,7 +3,7 @@ import classes from './ExpenseList.module.css';
 import {useSelector,useDispatch} from 'react-redux';
 import PremiumFeatures from './PremiumFeatures';
 import {themeAction} from '../../store/Theme';
-import {useEffect} from 'react';
+import {useEffect,memo} from 'react';
 
 const ExpenseList = (props)=>{
      
@@ -50,4 +50,4 @@ const ExpenseList = (props)=>{
       
     );
 }
-export default ExpenseList;
+export default memo(ExpenseList);

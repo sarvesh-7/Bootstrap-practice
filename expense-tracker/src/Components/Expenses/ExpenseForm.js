@@ -1,5 +1,5 @@
 import classes from './ExpenseForm.module.css';
-import {useRef, Fragment, useState} from 'react';
+import {useRef, Fragment, useState,memo} from 'react';
 import ExpenseList from './ExpenseList';
 import axios from 'axios';
 import {useSelector,useDispatch} from 'react-redux';
@@ -130,7 +130,8 @@ const ExpenseForm = ()=>{
             <option value='Food'>Food</option>
             <option value='Loan'>Loan</option>
             <option value='healthcare'>healthcare</option>
-            <option value='healthcare'>Others</option>
+            <option value='entertainment'>entertainment</option>
+            <option value='others'>Others</option>
             </Form.Select>
             {
                 !isEditing &&
@@ -157,4 +158,4 @@ const ExpenseForm = ()=>{
         </Fragment>
     )
 };
-export default ExpenseForm;
+export default memo(ExpenseForm);

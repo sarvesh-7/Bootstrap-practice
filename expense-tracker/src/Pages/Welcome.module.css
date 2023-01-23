@@ -1,16 +1,9 @@
 
-
-.verify{
-    color:rgb(211, 104, 104);
-    border : 1px solid rgb(211, 104, 104);
-    background-color: transparent;
-}
-
-.verify:hover{
-    background-color:rgb(211, 104, 104);
-    color:white;
-}
-
 .right-aligned{
     justify-content: flex-end;
+}
+
+.navLinks{
+    padding-left:0;
+    padding-right: 0;
 }

@@ -16,6 +16,7 @@ import Col from 'react-bootstrap/Col';
 const AuthForm = (props) => {
 
   const dispatch = useDispatch();
+  const theme = useSelector(state=>state.theme.theme);
 
   const navigate = useNavigate();
     //state to toggle between login/signup function
@@ -167,7 +168,7 @@ const AuthForm = (props) => {
       <Container fluid className='mt-5'>
         <Row>
         <Col className={classes.authForm } lg={4} sm={8} md={5} xs={11}>
-        <Card className={`${classes.card} p-2`}>
+        <Card bg={theme==='dark'&& 'dark'} className={`${classes.card} p-2 `}>
         { !isLogin && <Card.Title className="m-auto">Sign up</Card.Title>}
         { isLogin && <Card.Title className="m-auto">Login</Card.Title>}
         

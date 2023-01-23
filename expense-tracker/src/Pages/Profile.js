@@ -1,6 +1,5 @@
 import React,{Fragment,useRef,useState} from 'react';
 import {Link} from 'react-router-dom';
-// import Button from '../Components/UI/Button';
 import classes from './Profile.module.css';
 import {useSelector,useDispatch} from 'react-redux';
 import {authAction} from '../store/Auth';
@@ -67,8 +66,8 @@ const Profile = (props)=>{
                 {
                 !fullName && !profilePhoto &&
                 <Col sm={6} xs={12}>
-                <p className={classes.profile}>Your profile is 64% complete.</p>
-                <Link to='/profile'>Complete now</Link> 
+                <p className={classes.profile}>Your profile is 64% completed.
+                </p> 
                 </Col>
                 }
                 {

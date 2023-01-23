@@ -2,10 +2,10 @@ import './App.css';
 import AuthForm from './Components/Auth/AuthForm';
 import Header from './Components/Auth/Header';
 import {Route,Routes,Navigate} from 'react-router-dom';
-import Welcome from './Pages/Welcome';
-import Contact from './Pages/Contact';
-import {useContext,Fragment,useEffect} from 'react';
-import ForgotPassword from './Components/Auth/ForgotPassword';
+// import Welcome from './Pages/Welcome';
+// import Contact from './Pages/Contact';
+import {Fragment,useEffect,lazy,Suspense} from 'react';
+// import ForgotPassword from './Components/Auth/ForgotPassword';
 import {useDispatch,useSelector} from 'react-redux';
 import {authAction} from './store/Auth';
 import axios from 'axios';
@@ -13,6 +13,11 @@ import { expenseAction } from './store/Expense';
 
 
 function App() {
+
+  //lazy load below components
+  const Welcome = lazy(()=>import('./Pages/Welcome'));
+  const Contact = lazy(()=>import('./Pages/Contact'));
+  const ForgotPassword = lazy(()=>import('./Components/Auth/ForgotPassword'));
 
   //get theme
   const theme = useSelector((state)=>state.theme.theme);
@@ -103,7 +108,6 @@ const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
 
 
   //if theme is dark then assign dark theme css class to app div
-  let themeClass;
   if(theme==='dark')
     document.body.className='dark-theme';
     else
@@ -112,6 +116,7 @@ const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
 
   return (
     <div className='app'>
+      <Suspense fallback={<p>Loading..</p>}>
       <Routes>
       {
         isLoggedin &&
@@ -134,6 +139,7 @@ const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
         isLoggedin && <Route path='*' element={<p>404 not found</p>}/>
       } 
       </Routes>
+      </Suspense>
     </div>
   );
 }

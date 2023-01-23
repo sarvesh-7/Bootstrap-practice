@@ -1,22 +1,21 @@
-import React,{useContext, useEffect, useState} from "react";
-// import ExpenseContext from "../store/expense-context";
+import React,{ useEffect, useState} from "react";
 import {authAction} from '../store/Auth';
 import Profile from "./Profile";
 import SavedProfile from "./SavedProfile";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
+
 const Contact =()=>
 {
     const [contactPage,setContactPage]=useState(null)
     const token=useSelector(state=>state.auth.token);
    
-    // const expctx=useContext(ExpenseContext)
     const dispatch = useDispatch();
-    const tokenObj = {
-        idToken: token,
-      };
     
       useEffect(() => {
+        const tokenObj = {
+          idToken: token,
+        };
         async function getData() {
           try {
             const res = await axios.post(
@@ -48,7 +47,7 @@ const Contact =()=>
           }
         }
         getData();
-      }, []);
+      }, [dispatch,token]);
 
       const editButtonhandler=()=>
       {
@@ -61,4 +60,4 @@ const Contact =()=>
       { contactPage===false && <SavedProfile editButton={editButtonhandler} />}
     </React.Fragment>)
 }
-export default Contact
+export default Contact;

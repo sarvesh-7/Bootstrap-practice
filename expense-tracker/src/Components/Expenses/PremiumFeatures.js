@@ -29,6 +29,7 @@ const onClickHandler = ()=>{
     else{
         localStorage.setItem('premium_ac', true);
         dispatch(premiumAction.activatePremiumAc()); 
+        alert('Premium features activated! Check the features from Menubar');
     }
     console.log(isPremium);
 }
