@@ -81,8 +81,8 @@ const Welcome = (props) => {
     return (
         <Fragment>
             <Navbar collapseOnSelect bg="secondary" variant="dark" expand='md'>
-            <Container fluid>
-             <Navbar.Brand href="/">Welcome to Expense Tracker!!!
+            <Container>
+             <Navbar.Brand href="/">Welcome to Expense Tracker!!
              </Navbar.Brand>
              <Navbar.Text>
              {
@@ -103,8 +103,6 @@ const Welcome = (props) => {
              <Navbar.Toggle aria-controls="navLinks" />
                  <Navbar.Collapse id="navLinks" className={classes['right-aligned']}>
                      <Nav>
-                         {/* <Nav.Link href="#">Home</Nav.Link>
-                         <Nav.Link href="#">About</Nav.Link> */}
                          <Nav.Link href="#">
                          <Button variant="secondary" onClick={verifyEmailHandler} className={classes.verify}>Verify Email</Button>
                          </Nav.Link>

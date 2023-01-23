@@ -20,6 +20,7 @@ const Profile = (props)=>{
     const fullName = useSelector((state)=>state.auth.fullName);
     const profilePhoto = useSelector((state)=>state.auth.profilePhoto);
     const token = useSelector((state)=>state.auth.token);
+    const theme = useSelector(state=>state.theme.theme);
     const fullNameRef = useRef();
     const profileUrlRef = useRef();
 
@@ -56,9 +57,13 @@ const Profile = (props)=>{
     }
 
     return(
+        <>
+        {
+            status === 'pending' &&
+            <LoadingSpinner/>
+        }
         <Container fluid>
             <Row className="mt-2">
-                <Col>Winners never quite,quitters never win</Col>
                 {
                 !fullName && !profilePhoto &&
                 <Col sm={6} xs={12}>
@@ -75,8 +80,8 @@ const Profile = (props)=>{
             </Row>
             <hr/>
         <Row className="mt-2">
-            <Col lg={6} md={7} sm={8} xs={10} className={classes.contactForm}>
-                <Card className="p-2">
+            <Col lg={6} md={7} sm={8} xs={11} className={classes.contactForm}>
+                <Card className="p-2" bg={theme==='dark'&& 'dark'}>
             <Form>
                 <Form.Label className="mt-2"><i className="fa fa-github"></i> {}Full Name</Form.Label>
                 <Form.Control className="mt-2" type="text" ref={fullNameRef} defaultValue={fullName} required/>
@@ -88,58 +93,7 @@ const Profile = (props)=>{
             </Col>
         </Row>
         </Container>
-
-
-    /* <label forhtml='full_html'> */
-        //     <i className="fa fa-github"></i> {}Full Name</label>
-        //     <input type='text' id='full_html' ref={fullNameRef} defaultValue={fullName} required/>
-        //     <label forhtml='profile_url'>
-        //     <i className="	fa fa-upload"></i> {}Profile Photo URL</label>
-        //     <input type='url' id='profile_url' ref={profileUrlRef} defaultValue={profilePhoto} required/>
-        //     <Button type='submit' onClick={updateProfileHandler} className={classes.update}>Update</Button>  
-
-        // {/* // <Fragment>
-        // <div className={`${classes.welcome} font-italic`}>
-        // <p>Winners never quite,quitters never win.</p> */}
-        // {
-        //     !fullName && !profilePhoto &&
-        //     <Fragment>
-        //     <p className={classes.profile}>Your profile is 64% complete.
-        //     <Link to='/profile'>Complete now</Link> 
-        //     </p>
-        //     </Fragment>
-        // }
-        // {
-        //     fullName && profilePhoto &&
-        //     <p className={classes.profile}>
-        //     Your profile is now completed.
-        //     </p>
-        // }
-        // </div>
-        // <hr/>
-        // {
-        //     status==='pending' &&
-        //     <div className={classes.spinner}><LoadingSpinner/></div>
-        // }
-        // {
-        //     status!=='pending' &&
-        //     <div className={classes.main}>
-        // <div className={classes.formHeader}>
-        //     <span>Contact Details</span>
-        //     <Button className={classes.cancel}>Cancel</Button>
-        // </div>
-        // <form className={classes.contactForm}> 
-        //     <label forhtml='full_html'>
-        //     <i className="fa fa-github"></i> {}Full Name</label>
-        //     <input type='text' id='full_html' ref={fullNameRef} defaultValue={fullName} required/>
-        //     <label forhtml='profile_url'>
-        //     <i className="	fa fa-upload"></i> {}Profile Photo URL</label>
-        //     <input type='url' id='profile_url' ref={profileUrlRef} defaultValue={profilePhoto} required/>
-        //     <Button type='submit' onClick={updateProfileHandler} className={classes.update}>Update</Button>  
-        // </form>
-        // </div>
-        // }
-        // </Fragment>
+        </>
     );
 }
 export default Profile;

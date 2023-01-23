@@ -1,32 +1,3 @@
-.main{
-    width:60%;
-    margin: auto;
-    padding: auto;
-}
-
-.container{
-    display:flex;
-    margin: auto;
-    padding: auto;
-    /* border-collapse: separate; */
-    /* border-spacing:1rem; */
-    }
-
- .heading{
-     font-weight: bold;
-     display:table-row;
-     /* background-color:#C91622; */
-     text-align: center;
-     line-height: 25px;
-     font-size: 14px;
-     font-family:georgia;
-    border-bottom: 1px solid grey;  
- }
-
- .col{ 
-    display:table-cell;
- }
-
  .amt{
      display: flex;
      justify-content: space-between;

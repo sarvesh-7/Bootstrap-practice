@@ -1,5 +1,4 @@
 import Button from 'react-bootstrap/Button';
-import classes from './Logout.module.css';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {authAction} from '../store/Auth';
@@ -13,6 +12,8 @@ const Logout = ()=>{
 
     //clear authtoken and email from local storage and go to login page
     const logoutHandler = (e)=>{
+        localStorage.removeItem('exp_token');
+        localStorage.removeItem('exp_email');
         dispatch(authAction.updateAuthInfo({token:'',email:''}));
         dispatch(themeAction.offTheme());
     }

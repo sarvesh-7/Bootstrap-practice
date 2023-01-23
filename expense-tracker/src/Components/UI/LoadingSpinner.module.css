@@ -2,13 +2,20 @@
     display: inline-block;
     width: 80px;
     height: 80px;
+    position: fixed;
+    top: 50%;
+    left:50%;
+    margin: auto;
+    transform: translate(-50%,-50%);
+    z-index:2;
   }
   .spinner:after {
+    
     content: ' ';
     display: block;
     width: 64px;
     height: 64px;
-    margin: 8px;
+    margin: auto;
     border-radius: 50%;
     border: 6px solid rgb(196, 89, 89);
     border-color: rgb(196, 89, 89) transparent rgb(196, 89, 89) transparent;

@@ -1,5 +1,4 @@
-import classes from './ForgotPassword.module.css';
-// import Button from '../UI/Button';
+import classes from '../UI/LoadingSpinner.module.css';
 import axios from 'axios';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import { useRef,useState } from 'react';
@@ -55,9 +54,14 @@ const ForgotPassword = ()=>{
     }
 
     return(
+        <>
+        {
+            status === 'pending' &&
+            <LoadingSpinner/>
+            }
         <Container fluid>
     <Row>
-    <Col lg={5} xs={10} className={`mt-5`} style={{margin:'auto'}}>
+    <Col lg={5} xs={11} className={`mt-5`} style={{margin:'auto'}}>
     <Card border='danger' className={` p-3`}>
         <Form>
         <Form.Label forhtml='email'>Enter the email with which you have registered</Form.Label>
@@ -71,21 +75,7 @@ const ForgotPassword = ()=>{
         status==='pending' && <div className={classes.spinner}><LoadingSpinner/></div>
     } 
     </Container>
-    // <div className={classes.main}>
-    // <div className={classes.resetPswdForm}>
-    // {
-    //     status!=='pending' &&
-    //     <form className={classes.form}>
-    //     <label forhtml='email'>Enter the email with which you have registered</label>
-    //     <input type='email' id='email' placeholder='email' ref={emailRef}/>
-    //     <Button onClick={resetPasswordHandler} className={classes.resetButton}>Send Link</Button>
-    //    </form>
-    // }
-    // {
-    //     status==='pending' && <div className={classes.spinner}><LoadingSpinner/></div>
-    // } 
-    // </div>
-    // </div>
+    </>
     )
 };
 export default ForgotPassword;

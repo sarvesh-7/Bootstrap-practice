@@ -1,4 +1,3 @@
-import classes from './ExpenseItem.module.css';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import {useDispatch,useSelector} from 'react-redux';
@@ -17,6 +16,7 @@ const ExpenseItem = (props)=>{;
 
       //get user's email address
       const emailID = useSelector(state=>state.auth.email);
+      const theme = useSelector(state=>state.theme.theme)
 
     const removeExpense=async()=>{
 
@@ -45,21 +45,14 @@ const ExpenseItem = (props)=>{;
       <Fragment>
          {
             status === 'pending' &&
-            <div className={classes.spinner}>
             <LoadingSpinner/>
-            </div>
             }
-            {/* <div className={classes.main}>
-            <div className={classes.expenseItem}> */}
-            <Card className="mt-3">
+            <Card className="mt-3" bg={theme==='dark'&& 'dark'}>
               
             <Card.Header> {props.expense.description}</Card.Header>
             <Card.Body>
              {props.expense.category} - {props.expense.amount}/-
             </Card.Body>
-            {/* </div> */}
-            
-            {/* <div className={classes.expActions}> */}
             <Card.Footer>
             <Button variant="danger" className="me-2" onClick={removeExpense}>
               <i className='fa fa-trash-o'></i> 
@@ -69,8 +62,6 @@ const ExpenseItem = (props)=>{;
             </Button>
             </Card.Footer>
             </Card>
-            {/* </div> */}
-            {/* </div> */}
         </Fragment>
     ) 
 };

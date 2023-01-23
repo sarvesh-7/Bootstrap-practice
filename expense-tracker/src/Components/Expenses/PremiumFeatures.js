@@ -1,5 +1,4 @@
 import Button from 'react-bootstrap/Button';
-import classes from './PremiumFeatures.module.css';
 import {themeAction} from '../../store/Theme';
 import { useDispatch,useSelector } from 'react-redux';
 import {useState, Fragment, useEffect} from 'react';
@@ -32,7 +31,6 @@ const onClickHandler = ()=>{
         dispatch(premiumAction.activatePremiumAc()); 
     }
     console.log(isPremium);
-    // setIsPremium(true);
 }
 
 

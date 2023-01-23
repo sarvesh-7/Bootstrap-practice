@@ -1,12 +1,9 @@
 import ExpenseItem from './ExpenseItem';
 import classes from './ExpenseList.module.css';
-import Button from '../UI/Button';
 import {useSelector,useDispatch} from 'react-redux';
-import {Fragment} from 'react';
 import PremiumFeatures from './PremiumFeatures';
-import {premiumAction} from '../../store/Premium';
 import {themeAction} from '../../store/Theme';
-import {useEffect,useState} from 'react';
+import {useEffect} from 'react';
 
 const ExpenseList = (props)=>{
      
@@ -14,8 +11,6 @@ const ExpenseList = (props)=>{
     const expenseArr = useSelector(state=>state.expense.expenseList);
     const dispatch = useDispatch();
     let totalAmount = 0;
-
-    const[isPremiumButtonActive,setIsPremiumButtonActive] = useState(false);
 
 
     //count total amount for expenses
@@ -26,23 +21,17 @@ const ExpenseList = (props)=>{
          {  
           if (totalAmount < 10000) 
           {
-            dispatch(themeAction.offTheme());
-            setIsPremiumButtonActive(false);  
-          }
-          else{
-              setIsPremiumButtonActive(true);
+            dispatch(themeAction.offTheme()); 
           }
         }
           else{
             dispatch(themeAction.offTheme());
-            setIsPremiumButtonActive(false);
           }
 
     },[totalAmount,dispatch,expenseArr])
         
     return(
-      // <div className={classes.main}>
-      // <div className={classes.amt}>
+      
       <>
       <div className={classes.amt}>
       <span>Total Amount : {totalAmount}</span>
@@ -51,7 +40,6 @@ const ExpenseList = (props)=>{
                   <PremiumFeatures expenses = {props.expenses}/> 
               }
               </div>
-      {/* // </div> */}
                {props.expenses.map((expense)=>{ 
                   return <ExpenseItem key = {expense.id}
                   expense = {expense} 
@@ -59,9 +47,6 @@ const ExpenseList = (props)=>{
               }) }
 
         </>
-          // {/* </div> */}
-          // // </div>
-    
       
     );
 }

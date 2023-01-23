@@ -17,8 +17,7 @@ const authSlice = createSlice({
              //update token & email in local storage and update state
              const token = action.payload.token;
              const email = action.payload.email;
-                localStorage.setItem('exp_token', token);
-                localStorage.setItem('exp_email', email.replace(/['@.']/g,''));
+                
 
                 if(!token && !email)
                 state.isLoggedin = false;

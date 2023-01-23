@@ -4,7 +4,6 @@ import Header from './Components/Auth/Header';
 import {Route,Routes,Navigate} from 'react-router-dom';
 import Welcome from './Pages/Welcome';
 import Contact from './Pages/Contact';
-import AuthContext from './Components/Store/AuthContext';
 import {useContext,Fragment,useEffect} from 'react';
 import ForgotPassword from './Components/Auth/ForgotPassword';
 import {useDispatch,useSelector} from 'react-redux';
@@ -102,8 +101,6 @@ const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
         fetchProfile();    
     },[token,getProfileUrl,dispatch]);
 
-
-  const authCtx = useContext(AuthContext);
 
   //if theme is dark then assign dark theme css class to app div
   let themeClass;

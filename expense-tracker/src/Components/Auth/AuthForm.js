@@ -1,6 +1,4 @@
 import React,{useState,useRef, Fragment} from 'react';
-// import Button from '../UI/Button';
-// import AuthContext from '../Store/AuthContext';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import ForgotPassword from './ForgotPassword';
@@ -32,7 +30,6 @@ const AuthForm = (props) => {
     const passwordRef = useRef();
     const confPasswordRef = useRef();
 
-    // const authCtx = useContext(AuthContext);
 
     //switch between login/signeup
         const switchAuthModeHandler = () => {
@@ -136,10 +133,13 @@ const AuthForm = (props) => {
                 setStatus('completed');
                 setIsSendingReq(false);
                 alert('User authenticated successfully');
-            
-
                 const data = await res.json();
-                dispatch(authAction.updateAuthInfo({token : data.idToken, email : emailRef.current.value}));
+                const convertedEmail = emailRef.current.value.replace(/['@.']/g,'');
+                localStorage.setItem('exp_token', data.idToken);
+                localStorage.setItem('exp_email', convertedEmail);
+
+                
+                dispatch(authAction.updateAuthInfo({token : data.idToken, email : convertedEmail}));
               }
               else{
                 //if credentials are wrong
@@ -159,9 +159,14 @@ const AuthForm = (props) => {
       }
     }
     return (
+      <>
+      {
+        status === 'pending' &&
+        <LoadingSpinner/>
+        }
       <Container fluid className='mt-5'>
         <Row>
-        <Col className={classes.authForm } lg={4} sm={8} md={5} xs={10}>
+        <Col className={classes.authForm } lg={4} sm={8} md={5} xs={11}>
         <Card className={`${classes.card} p-2`}>
         { !isLogin && <Card.Title className="m-auto">Sign up</Card.Title>}
         { isLogin && <Card.Title className="m-auto">Login</Card.Title>}
@@ -194,43 +199,7 @@ const AuthForm = (props) => {
         </Col>
         </Row>
         </Container>
-    //   <div className={classes.main}>
-    //     {
-    //        status === 'pending' &&
-    //        <div className={classes.spinner}>
-    //        <LoadingSpinner/>
-    //        </div>
-    //     }
-    //     <div className={`${classes.authForm} `}>
-    //     <h1>{isLogin ? 'Login' : 'SignUp' }</h1>
-    //     <form onSubmit={onSubmitHandler}>
-    //         <input type='email' id='email' ref={emailRef} placeholder='Email'/>
-    //         <input type='password' id='password' ref={passwordRef} placeholder='Password'/>
-    //         {
-    //           !isLogin && 
-    //           <React.Fragment> 
-    //           <input type='password' id='conf_password' ref={confPasswordRef} placeholder='Confirm Password'/>
-    //           </React.Fragment>
-    //         }
-    //         {
-    //             !isSendingReq && <Button type='submit' className={classes.authButton}>{isLogin ? 'Login' : 'Sign Up' }</Button>
-    //         }
-    //         {
-    //             isSendingReq && <p>Sending Request</p>
-    //         }
-    //     </form>
-    //     {
-    //           isLogin &&
-    //           <Fragment>
-    //           <Link to='/ForgotPassword'>Forgot password</Link>
-    //           </Fragment>
-    //     }
-    //     </div>
-    //     <div className={classes.switch}>
-    //       <button onClick={switchAuthModeHandler} className={classes.switchAuth}>
-    //       {isLogin ? "Don't have an account?Sign Up" : 'Have an account?Login' }</button>
-    //     </div>
-    //     </div>
+        </>
     )
 }
 export default AuthForm;

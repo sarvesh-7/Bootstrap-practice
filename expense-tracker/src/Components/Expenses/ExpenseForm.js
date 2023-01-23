@@ -1,6 +1,5 @@
 import classes from './ExpenseForm.module.css';
 import {useRef, Fragment, useState} from 'react';
-// import Button from '../UI/Button';
 import ExpenseList from './ExpenseList';
 import axios from 'axios';
 import {useSelector,useDispatch} from 'react-redux';
@@ -17,6 +16,9 @@ const ExpenseForm = ()=>{
 
     //firebase database URL path
     const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
+
+    //get theme
+  const theme = useSelector((state)=>state.theme.theme);
 
      //firebase database URL path for update
      const updateUrl = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
@@ -48,6 +50,9 @@ const ExpenseForm = ()=>{
         const amount = amountRef.current.value;
         const description = descRef.current.value;
         const category = categoryRef.current.value;
+
+        amountRef.current.value = "";
+        descRef.current.value = "";
 
         if(!amount||!description){
             alert('All fields are mandatory');
@@ -111,17 +116,15 @@ const ExpenseForm = ()=>{
         <Fragment>
         {
             status === 'pending' &&
-            <div className={classes.spinner}>
             <LoadingSpinner/>
-            </div>
         }
         <Container>
         <Row>
-        <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={10}>
-        <Card className="p-3">
+        <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={12}>
+        <Card className="p-3" bg={theme==='dark'&& 'dark'}>
         <Form>
             <Form.Control type="number" ref={amountRef} placeholder="Amount" className="mb-3"/>
-            <Form.Control type="number" ref={descRef} placeholder="Description" className="mb-3"/>
+            <Form.Control type="text" ref={descRef} placeholder="Description" className="mb-3"/>
             <Form.Select ref={categoryRef}>
             <option value='Bills'>Bills</option>
             <option value='Food'>Food</option>
@@ -146,7 +149,7 @@ const ExpenseForm = ()=>{
         </Col>
         </Row>
         <Row>
-        <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={10}>
+        <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={12} >
         <ExpenseList expenses = {expenseList} editExpense={editExpense}/>
         </Col>
         </Row>
