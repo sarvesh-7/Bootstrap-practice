@@ -58,11 +58,44 @@ describe('AuthForm Component', ()=>{
         userEvent.type(email, 'test@gmail.com');
         userEvent.type(password, 'Sarvesh');
         userEvent.type(confPassword, 'Sarvesh');
-        await act(()=>userEvent.click(signupBtn));
+        const res = await act(async()=>await userEvent.click(signupBtn));
 
         //Assert
-        expect(global.alert).toHaveBeenCalledTimes(1);
+        // expect(global.alert).toHaveBeenCalledTimes(1);
+        const message = screen.queryByText('User created successfully');
+        screen.debug();
+        expect(message).toBeInTheDocument();
+        
+    });
 
+    test('Should give an error message if something goes wrong like weak password or existing user', async()=>{
+        //Arrange
+        const signupBtn = screen.queryByRole('button', {name : 'Sign up'});
+        const email = screen.getByPlaceholderText('Email');
+        const password = screen.getByPlaceholderText('Password');
+        const confPassword = screen.getByPlaceholderText('Confirm Password');
+
+        window.fetch = jest.fn(()=>{
+            return Promise.resolve({
+                ok : false,
+                json : async ()=> {return { error: { message:'Something went wrong'}}}
+            });
+        });
+
+        global.alert = jest.fn();
+
+        //Action
+        userEvent.type(email, 'test@gmail.com');
+        userEvent.type(password, 'Sarvesh');
+        userEvent.type(confPassword, 'Sarvesh');
+        const res = await act(async()=>await userEvent.click(signupBtn));
+
+        //Assert
+        // expect(global.alert).toHaveBeenCalledTimes(1);
+        const message = screen.queryByText('Something went wrong');
+        screen.debug();
+        expect(message).toBeInTheDocument();
+        
     })
 
 

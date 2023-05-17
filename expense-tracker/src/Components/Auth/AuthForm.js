@@ -12,6 +12,7 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import CustModal from '../UI/Modal';
 
 const AuthForm = (props) => {
 
@@ -25,6 +26,14 @@ const AuthForm = (props) => {
      //state to show sending request loader
     const[isSendingReq, setIsSendingReq] = useState(false);
     const[status,setStatus] = useState();
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+      //alert message
+      const[alert,setAlert] = useState('');
 
     //get entered email and password
     const emailRef = useRef();
@@ -58,12 +67,14 @@ const AuthForm = (props) => {
             //check if all fields are not empty
             if(email===''||password===''||confPasword==='')
             {
-                alert('All fields are mandatory');
+                setAlert('All fields are mandatory');
+                setShow(true);
             }
 
             else if(password!==confPasword)
             {
-                alert('Please enter same confirmation password');
+                setAlert('Please enter same confirmation password');
+                setShow(true);
             }
 
             //check if password and email has valid format and then create new user in firebase
@@ -87,15 +98,17 @@ const AuthForm = (props) => {
                     //when succesfully created account
                     setIsSendingReq(false);
                     setStatus('completed');
-                    alert('User created successfully');
+                    setAlert('User created successfully');
+                    setShow(true);
                   }
                   else{
                     //when account creation failed due to same email or weak password etc
                     const data = await res.json();
                     console.log(data.error.message);
-                    alert(data.error.message);
+                    setAlert(data.error.message);
                     setIsSendingReq(false);
                     setStatus('completed');
+                    setShow(true);
                   }
                   }
                   catch(error){
@@ -112,7 +125,8 @@ const AuthForm = (props) => {
             //check if all fields are not empty
             if(email===''||password==='')
             {
-                alert('All fields are mandatory');
+                setAlert('All fields are mandatory');
+                setShow(true);
             }
             else{
             try{
@@ -133,7 +147,8 @@ const AuthForm = (props) => {
                 //if credential matches
                 setStatus('completed');
                 setIsSendingReq(false);
-                alert('User authenticated successfully');
+                setAlert('User authenticated successfully');
+                setShow(true);
                 const data = await res.json();
                 const convertedEmail = emailRef.current.value.replace(/['@.']/g,'');
                 localStorage.setItem('exp_token', data.idToken);
@@ -146,8 +161,9 @@ const AuthForm = (props) => {
                 //if credentials are wrong
                 setStatus('completed');
                 const data = await res.json();
-                alert(data.error.message);
+                setAlert(data.error.message);
                 setIsSendingReq(false);
+                setShow(true);
             }
           }
             catch(error){
@@ -199,6 +215,7 @@ const AuthForm = (props) => {
         </Card>
         </Col>
         </Row>
+        {show && <CustModal message = {alert} handleClose = {handleClose}/>}
         </Container>
         </>
     )

@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import classes2 from '../UI/common_css.module.css';
 import classes1 from './ForgotPassword.module.css';
+import CustModal from '../UI/Modal';
 
 const ForgotPassword = ()=>{
 
@@ -21,9 +22,14 @@ const ForgotPassword = ()=>{
     const[status,setStatus] = useState('');
 
     //alert message
-    // const[alert,setAlert] = useState('');
+    const[alert,setAlert] = useState('');
 
     const theme = useSelector(state=>state.theme.theme);
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     
 
     //reset password URL
@@ -35,8 +41,9 @@ const ForgotPassword = ()=>{
         e.preventDefault();
         if(emailRef.current.value==='')
         {
-            alert('Email field cannot be empty');
-            // setAlert('Email field cannot be empty');
+            // alert('Email field cannot be empty');
+            setAlert('Email field cannot be empty');
+            setShow(true);
             return;
         }
         setStatus('pending');
@@ -48,20 +55,23 @@ const ForgotPassword = ()=>{
                 });
                 
                 if(res.status===200){
-                    alert('Password reset link has been sent on the entered email');
-                    // setAlert('Password reset link has been sent on the entered email');
+                    // alert('Password reset link has been sent on the entered email');
+                    setAlert('Password reset link has been sent on the entered email');
                     setStatus('completed');
+                    setShow(true);
                 }
                 else{
-                    alert('Error while processing request');
-                    // setAlert('Error while processing request');
+                    // alert('Error while processing request');
+                    setAlert('Error while processing request');
                     setStatus('completed');
+                    setShow(true);
                 }
         }
         catch(error){
-            alert('Something went wrong! Please try again.');
-            // setAlert('Something went wrong! Please try again.');
+            // alert('Something went wrong! Please try again.');
+            setAlert('Something went wrong! Please try again.');
             setStatus('completed');
+            setShow(true);
         }    
     }
 
@@ -90,7 +100,7 @@ const ForgotPassword = ()=>{
     {
         status==='pending' && <div className={classes.spinner}><LoadingSpinner/></div>
     } 
-    {/* {alert && <div class={classes1.message}>{alert}</div>} */}
+    {show && <CustModal message = {alert} handleClose = {handleClose}/>}
     </Container>
     </>
     )
