@@ -5,6 +5,7 @@ import {expenseAction} from '../../store/Expense';
 import axios from 'axios';
 import React,{Fragment,useState} from 'react';
 import LoadingSpinner from '../UI/LoadingSpinner';
+import classes from '../UI/common_css.module.css';
 
 const ExpenseItem = (props)=>{;
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const ExpenseItem = (props)=>{;
             status === 'pending' &&
             <LoadingSpinner/>
             }
-            <Card className="mt-3" bg={theme==='dark'&& 'dark'}>
+            <Card className={`${classes.shadow} mt-3`} bg={theme==='dark'&& 'dark'}>
               
             <Card.Header> {props.expense.description}</Card.Header>
             <Card.Body>

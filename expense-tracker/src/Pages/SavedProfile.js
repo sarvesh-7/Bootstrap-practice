@@ -7,6 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import classes2 from '../Components/UI/common_css.module.css';
+
 const SavedProfile = (prop) => {
 
   // const expctx = useContext(ExpenseContext);
@@ -18,7 +20,7 @@ const SavedProfile = (prop) => {
     <Container fluid>
       <Row>
         <Col lg={6} md={7} sm={9} xs={11}  style={{margin:'auto'}}>
-        <Card className="mt-3" bg={theme==='dark'&& 'dark'}> 
+        <Card className={`${classes2.shadow} mt-3`} bg={theme==='dark'&& 'dark'}> 
         <Card.Header style={{textAlign:'center'}}><h3>Your profile</h3></Card.Header>
         <Card.Body>
        <main className={classes.main} >
