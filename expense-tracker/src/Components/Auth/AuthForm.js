@@ -1,8 +1,8 @@
 import React,{useState,useRef, Fragment} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
-import ForgotPassword from './ForgotPassword';
 import classes from './AuthForm.module.css';
+import classes2 from '../UI/common_css.module.css';
 import {useDispatch,useSelector} from 'react-redux';
 import {authAction} from '../../store/Auth';
 import LoadingSpinner from '../UI/LoadingSpinner';
@@ -168,7 +168,7 @@ const AuthForm = (props) => {
       <Container fluid className='mt-5'>
         <Row>
         <Col className={classes.authForm } lg={4} sm={8} md={5} xs={11}>
-        <Card bg={theme==='dark'&& 'dark'} className={`${classes.card} p-2 `}>
+        <Card bg={theme==='dark'&& 'dark'} className={`${classes2.shadow} p-2 `}>
         { !isLogin && <Card.Title className="m-auto">Sign up</Card.Title>}
         { isLogin && <Card.Title className="m-auto">Login</Card.Title>}
         
@@ -194,8 +194,8 @@ const AuthForm = (props) => {
         </Card.Body>
         </Card>
         <Card className={`${classes.card} mt-2`}>
-        { !isLogin && <Button onClick={switchAuthModeHandler} variant="danger" >Have an account?Login</Button> }
-        { isLogin && <Button onClick={switchAuthModeHandler} variant="danger" >Dont Have an account?Signup</Button> }
+        { !isLogin && <Button data-testid="auth-btn" onClick={switchAuthModeHandler} variant="danger" className={classes2.shadow} >Have an account?Login</Button> }
+        { isLogin && <Button data-testid="auth-btn" onClick={switchAuthModeHandler} variant="danger" className={classes2.shadow} >Dont Have an account?Signup</Button> }
         </Card>
         </Col>
         </Row>

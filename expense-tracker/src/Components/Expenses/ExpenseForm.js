@@ -11,6 +11,7 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import classes2 from '../UI/common_css.module.css';
 
 const ExpenseForm = ()=>{
 
@@ -121,7 +122,7 @@ const ExpenseForm = ()=>{
         <Container>
         <Row>
         <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={12}>
-        <Card className="p-3" bg={theme==='dark'&& 'dark'}>
+        <Card className={`${classes2.shadow} p-3`} bg={theme==='dark'&& 'dark'}>
         <Form>
             <Form.Control type="number" ref={amountRef} placeholder="Amount" className="mb-3"/>
             <Form.Control type="text" ref={descRef} placeholder="Description" className="mb-3"/>

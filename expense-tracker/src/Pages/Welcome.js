@@ -10,6 +10,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import {themeAction} from '../store/Theme';
 import Button from 'react-bootstrap/Button';
+import classes2 from '../Components/UI/common_css.module.css';
 
 
 const Welcome = (props) => {
@@ -77,24 +78,23 @@ const Welcome = (props) => {
 
     return (
         <Fragment>
-            <Navbar collapseOnSelect bg="secondary" variant="dark" expand='lg'>
+            <Navbar collapseOnSelect bg="secondary" variant="dark" expand='lg' className={classes2.shadow}>
             <Container fluid>
              <Navbar.Brand href="/">Welcome to Expense Tracker!!
              </Navbar.Brand>
              <Navbar.Text>
              {
-            !fullName && !profilePhoto &&
-            <span>
-            Your profile is incomplete  
-            <Link to={`/profile`}>Complete now</Link> 
-            </span>
-        }
-        {
-            fullName && profilePhoto &&
+            fullName && profilePhoto ?
             <span>
                 Your profile is completed &nbsp;
                 <Link to={`/profile`}>Edit profile</Link> 
             </span>
+            :
+            <span>
+            Your profile is incomplete  
+            <Link to={`/profile`}>Complete now</Link> 
+            </span>
+             
         }
         </Navbar.Text>
              <Navbar.Toggle aria-controls="navLinks" />

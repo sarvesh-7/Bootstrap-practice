@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import classes2 from '../Components/UI/common_css.module.css';
 
 import axios from 'axios';
 
@@ -64,23 +65,21 @@ const Profile = (props)=>{
         <Container fluid>
             <Row className="mt-2">
                 {
-                !fullName && !profilePhoto &&
+                !fullName && !profilePhoto ?
+                <Col sm={6} xs={12}>
+                <p className={classes.profile}>Your profile is now completed.</p>
+                </Col>
+                :
                 <Col sm={6} xs={12}>
                 <p className={classes.profile}>Your profile is 64% completed.
                 </p> 
-                </Col>
-                }
-                {
-                fullName && profilePhoto &&
-                <Col sm={6} xs={12}>
-               <p className={classes.profile}>Your profile is now completed.</p>
                 </Col>
                 }
             </Row>
             <hr/>
         <Row className="mt-2">
             <Col lg={6} md={7} sm={8} xs={11} className={classes.contactForm}>
-                <Card className="p-2" bg={theme==='dark'&& 'dark'}>
+                <Card className={`${classes2.shadow} p-2`} bg={theme==='dark'&& 'dark'}>
             <Form>
                 <Form.Label className="mt-2"><i className="fa fa-github"></i> {}Full Name</Form.Label>
                 <Form.Control className="mt-2" type="text" ref={fullNameRef} defaultValue={fullName} required/>
