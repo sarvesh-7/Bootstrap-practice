@@ -3,9 +3,15 @@ import {themeAction} from '../../store/Theme';
 import { useDispatch,useSelector } from 'react-redux';
 import {useState, Fragment, useEffect} from 'react';
 import {premiumAction} from '../../store/Premium';
+import CustModal from '../UI/Modal';
 
 
 const PremiumFeatures = (props)=>{
+
+    const[show,setShow] = useState();
+    const[alert,setAlert] = useState();
+
+    const closeModal = ()=>setShow(false);
 
     const dispatch = useDispatch();
     // const [isPremium,setIsPremium] = useState(false);
@@ -29,7 +35,8 @@ const onClickHandler = ()=>{
     else{
         localStorage.setItem('premium_ac', true);
         dispatch(premiumAction.activatePremiumAc()); 
-        alert('Premium features activated! Check the features from Menubar');
+        setAlert('Premium features activated! Check the features from Menubar');
+        setShow(true);
     }
     console.log(isPremium);
 }
@@ -47,6 +54,7 @@ const onClickHandler = ()=>{
             Deactivate Premium 
         </Button>
         }
+        {show && <CustModal message = {alert} handleClose={closeModal}/>}
         </Fragment>
     );
 };

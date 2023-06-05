@@ -12,8 +12,17 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import classes2 from '../UI/common_css.module.css';
+import CustModal from '../UI/Modal';
 
 const ExpenseForm = ()=>{
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+      //alert message
+      const[alert,setAlert] = useState('');
 
     //firebase database URL path
     const url = 'https://expense-tracker-d3062-default-rtdb.firebaseio.com';
@@ -45,7 +54,8 @@ const ExpenseForm = ()=>{
 
         if(expenseList.length===10)
         {
-            alert('Maximum expenses limit reached');
+            setAlert('Maximum expenses limit reached');
+            setShow(true);
             return;
         }
         const amount = amountRef.current.value;
@@ -56,7 +66,8 @@ const ExpenseForm = ()=>{
         descRef.current.value = "";
 
         if(!amount||!description){
-            alert('All fields are mandatory');
+            setAlert('All fields are mandatory');
+            setShow(true);
             return;
         }
 
@@ -72,7 +83,8 @@ const ExpenseForm = ()=>{
         console.log('res', res);
 
         if(res.status===200){
-            alert('Expense stored in database successfully');
+            setAlert('Expense stored in database successfully');
+            setShow(true);
             setStatus('completed');
            const expense = {
                id : res.data.name,
@@ -81,7 +93,8 @@ const ExpenseForm = ()=>{
         dispatch(expenseAction.addExpense(expense));
         }
         else{
-            alert('Error while storing expense details ');
+            setAlert('Error while storing expense details ');
+            setShow(true);
             setStatus('completed');
         }
 
@@ -124,9 +137,9 @@ const ExpenseForm = ()=>{
         <Col className={`${classes.expenseForm} mt-3`} lg={5} md={6} sm={8} xs={12}>
         <Card className={`${classes2.shadow} p-3`} bg={theme==='dark'&& 'dark'}>
         <Form>
-            <Form.Control type="number" ref={amountRef} placeholder="Amount" className="mb-3"/>
-            <Form.Control type="text" ref={descRef} placeholder="Description" className="mb-3"/>
-            <Form.Select ref={categoryRef}>
+            <Form.Control aria-label = "amount" type="number" ref={amountRef} placeholder="Amount" className="mb-3"/>
+            <Form.Control aria-label = "desc" type="text" ref={descRef} placeholder="Description" className="mb-3"/>
+            <Form.Select aria-label="category" data-testid="cat" ref={categoryRef}>
             <option value='Bills'>Bills</option>
             <option value='Food'>Food</option>
             <option value='Loan'>Loan</option>
@@ -155,6 +168,7 @@ const ExpenseForm = ()=>{
         <ExpenseList expenses = {expenseList} editExpense={editExpense}/>
         </Col>
         </Row>
+        {show && <CustModal message = {alert} handleClose = {handleClose}/>}
         </Container>
         </Fragment>
     )
