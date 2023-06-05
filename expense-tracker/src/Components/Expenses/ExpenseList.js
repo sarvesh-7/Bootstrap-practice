@@ -34,7 +34,7 @@ const ExpenseList = (props)=>{
       
       <>
       <div className={classes.amt}>
-      <span>Total Expense Amount : {totalAmount}</span>
+      <span>Total Exp Amount : {totalAmount}</span>
               {
                   totalAmount >= 10000 && 
                   <PremiumFeatures expenses = {props.expenses}/> 
